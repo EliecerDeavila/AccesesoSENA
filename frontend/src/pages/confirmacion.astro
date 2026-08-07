@@ -1,0 +1,97 @@
+---
+import Layout from '../layout/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Confirmación - Control de Acceso SENA">
+  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex items-center justify-center min-h-[60vh]">
+      <!-- Tarjeta de confirmación -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+        <!-- Check verde -->
+        <div class="w-20 h-20 bg-sena-primary rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <!-- Título -->
+        <h1 id="confirmacion-titulo" class="text-2xl font-bold text-sena-primary mb-4">
+          ¡Registro Exitoso!
+        </h1>
+
+        <!-- Mensaje -->
+        <p id="confirmacion-mensaje" class="text-sena-neutral-500 mb-6">
+          El ingreso de <span id="confirmacion-nombre" class="font-semibold text-sena-dark">--</span> ha sido registrado correctamente.
+        </p>
+
+        <!-- Identificador de acceso -->
+        <div class="bg-sena-neutral-100 rounded-xl p-4 mb-6">
+          <p class="text-sm text-sena-neutral-500 mb-2">IDENTIFICADOR DE ACCESO</p>
+          <div class="flex items-center justify-center gap-2">
+            <svg class="w-5 h-5 text-sena-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+            </svg>
+            <span class="text-lg font-bold text-sena-dark">
+              N° escarapela: <span id="confirmacion-escarapela">--</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Botón finalizar -->
+        <button id="btn-finalizar" class="w-full py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-semibold text-lg">
+          Finalizar
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="text-center py-4">
+    <p class="text-sena-dark font-semibold">SENA - Náutico Fluvial y Portuario</p>
+  </footer>
+</Layout>
+
+<script>
+  // Check authentication
+  const token = localStorage.getItem('token');
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+  if (!token || (usuario.rol !== 'VIGILANTE' && usuario.rol !== 'ADMINISTRADOR')) {
+    window.location.href = '/';
+  }
+
+  // Get params from URL
+  const params = new URLSearchParams(window.location.search);
+  const tipo = params.get('tipo') || 'entrada';
+  const nombre = params.get('nombre') || 'Usuario';
+  const escarapela = params.get('escarapela') || 'N/A';
+
+  // Update UI based on type
+  const titulo = document.getElementById('confirmacion-titulo');
+  const mensaje = document.getElementById('confirmacion-mensaje');
+  const nombreEl = document.getElementById('confirmacion-nombre');
+  const escarapelaEl = document.getElementById('confirmacion-escarapela');
+
+  if (tipo === 'salida') {
+    titulo.textContent = '¡Salida Exitosa!';
+    mensaje.innerHTML = `La Salida de <span class="font-semibold text-sena-dark">${nombre}</span> ha sido registrada correctamente.`;
+  } else {
+    titulo.textContent = '¡Registro Exitoso!';
+    mensaje.innerHTML = `El ingreso de <span class="font-semibold text-sena-dark">${nombre}</span> ha sido registrado correctamente.`;
+  }
+
+  escarapelaEl.textContent = escarapela;
+
+  // Finalizar button
+  document.getElementById('btn-finalizar')?.addEventListener('click', () => {
+    const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
+    if (usuarioData.rol === 'ADMINISTRADOR') {
+      window.location.href = '/admin';
+    } else {
+      window.location.href = '/dashboard';
+    }
+  });
+</script>

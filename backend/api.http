@@ -1,0 +1,123 @@
+### Login - Administrador
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "numero_documento": "1000000000",
+  "password": "Say95112413d**"
+}
+
+### Login - Credenciales incorrectas
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "numero_documento": "1000000000",
+  "password": "wrongpass"
+}
+
+### Login - Datos incompletos
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "numero_documento": "100"
+}
+
+###
+
+### Listar todos los usuarios (requiere token)
+GET http://localhost:3000/api/usuarios/listar
+Authorization: Bearer {{token}}
+
+###
+
+### Buscar usuario por documento
+GET http://localhost:3000/api/usuarios/documento/1000000000
+Authorization: Bearer {{token}}
+
+###
+
+### Crear usuario
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "numero_documento": "1098765432",
+  "tipo_documento": "CC",
+  "nombre_completo": "Juan Perez",
+  "id_rol": 3,
+  "telefono_contacto": "3001112233",
+  "contacto_emergencia": "3004445566"
+}
+
+###
+
+### Actualizar usuario
+PUT http://localhost:3000/api/usuarios/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "telefono_contacto": "3009998877"
+}
+
+###
+
+### Eliminar usuario
+DELETE http://localhost:3000/api/usuarios/2
+Authorization: Bearer {{token}}
+
+###
+
+### Registrar entrada
+POST http://localhost:3000/api/accesos/entrada
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_usuario": 2,
+  "motivo_visita": "Clase de natación"
+}
+
+###
+
+### Registrar salida
+POST http://localhost:3000/api/accesos/salida
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id_usuario": 2
+}
+
+###
+
+### Listar todos los accesos
+GET http://localhost:3000/api/accesos
+Authorization: Bearer {{token}}
+
+###
+
+### Buscar accesos por documento de usuario
+GET http://localhost:3000/api/accesos/usuario/1098765432
+Authorization: Bearer {{token}}
+
+###
+
+### Reportes generales
+GET http://localhost:3000/api/reportes
+Authorization: Bearer {{token}}
+
+###
+
+### Reportes por rango de fechas
+GET http://localhost:3000/api/reportes/por-fecha?fecha_inicio=2026-08-01&fecha_fin=2026-08-07
+Authorization: Bearer {{token}}
+
+###
+
+### Consultar aforo actual
+GET http://localhost:3000/api/reportes/aforo
+Authorization: Bearer {{token}}

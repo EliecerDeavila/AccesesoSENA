@@ -1,0 +1,222 @@
+---
+import Layout from '../layout/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Detalle del Registro - Control de Acceso SENA">
+  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Título -->
+    <h1 class="text-2xl font-bold text-sena-dark mb-6">Detalle del registro</h1>
+
+    <!-- Contenedor principal -->
+    <div class="bg-sena-neutral-100 rounded-xl p-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Información Personal -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-20 h-20 bg-sena-neutral-200 rounded-full flex items-center justify-center">
+              <svg class="w-10 h-10 text-sena-neutral-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-sena-dark">Información Personal</h2>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Nombre completo</span>
+              <span id="detalle-nombre" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Documento</span>
+              <span id="detalle-documento" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Rol</span>
+              <span id="detalle-rol" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Contacto</span>
+              <span id="detalle-contacto" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Contacto de emergencia</span>
+              <span id="detalle-emergencia-nombre" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-sena-neutral-500">Número de emergencia</span>
+              <span id="detalle-emergencia-telefono" class="font-medium text-sena-dark">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalles de la Visita -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 bg-sena-primary/10 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-sena-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-sena-dark">Detalles de la Visita</h2>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Fecha</span>
+              <span id="detalle-fecha" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Hora de entrada</span>
+              <span id="detalle-entrada" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Hora de salida</span>
+              <span id="detalle-salida" class="font-medium text-sena-dark">--</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+              <span class="text-sena-neutral-500">Tiempo total de permanencia</span>
+              <span id="detalle-permanencia" class="font-bold text-sena-primary text-lg">--</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-sena-neutral-500">Escarapela asignada</span>
+              <span id="detalle-escarapela" class="font-medium text-sena-dark">#--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Motivo de la visita -->
+      <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+        <h2 class="text-lg font-semibold text-sena-dark mb-4">Asunto / Motivo de la visita</h2>
+        <p id="detalle-motivo" class="text-sena-neutral-500 leading-relaxed">
+          --
+        </p>
+      </div>
+
+      <!-- Botón de acción -->
+      <div class="flex justify-end mt-6">
+        <button id="btn-salir" class="px-8 py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-medium text-lg">
+          Salir
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Check authentication
+  const token = localStorage.getItem('token');
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+  if (!token || (usuario.rol !== 'VIGILANTE' && usuario.rol !== 'ADMINISTRADOR')) {
+    window.location.href = '/';
+  }
+
+  // Get document from URL params
+  const params = new URLSearchParams(window.location.search);
+  const doc = params.get('doc');
+
+  if (!doc) {
+    window.location.href = '/dashboard';
+  }
+
+  // Load visitor data
+  async function loadVisitorData() {
+    try {
+      const headers = { 'Authorization': `Bearer ${token}` };
+      
+      // Get user data
+      const userRes = await fetch(`http://localhost:3000/api/usuarios/documento/${doc}`, { headers });
+      const userData = await userRes.json();
+
+      // Get access data
+      const accessRes = await fetch(`http://localhost:3000/api/accesos/usuario/${doc}`, { headers });
+      const accessData = await accessRes.json();
+
+      // Find open access (no exit)
+      const openAccess = Array.isArray(accessData) 
+        ? accessData.find((a: any) => !a.hora_salida)
+        : null;
+      
+      // Get last access
+      const lastAccess = Array.isArray(accessData) && accessData.length > 0 
+        ? accessData[0] 
+        : null;
+
+      // Fill personal info
+      document.getElementById('detalle-nombre').textContent = userData.nombre_completo || '--';
+      document.getElementById('detalle-documento').textContent = `${userData.tipo_documento} ${userData.numero_documento}` || '--';
+      document.getElementById('detalle-rol').textContent = userData.rol?.nombre || '--';
+      document.getElementById('detalle-contacto').textContent = userData.telefono_contacto || '--';
+      document.getElementById('detalle-emergencia-nombre').textContent = userData.contacto_emergencia || '--';
+      document.getElementById('detalle-emergencia-telefono').textContent = '--';
+
+      // Fill visit details
+      if (lastAccess) {
+        document.getElementById('detalle-fecha').textContent = lastAccess.fecha || '--';
+        document.getElementById('detalle-entrada').textContent = lastAccess.hora_entrada || '--';
+        document.getElementById('detalle-salida').textContent = lastAccess.hora_salida || 'No registrada';
+        document.getElementById('detalle-escarapela').textContent = `#${lastAccess.id_acceso}`;
+        document.getElementById('detalle-motivo').textContent = lastAccess.motivo_visita || 'No especificado';
+
+        // Calculate permanence
+        if (lastAccess.hora_salida) {
+          const entry = new Date(`2000-01-01T${lastAccess.hora_entrada}`);
+          const exit = new Date(`2000-01-01T${lastAccess.hora_salida}`);
+          const diff = exit.getTime() - entry.getTime();
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          document.getElementById('detalle-permanencia').textContent = `${hours} H ${minutes} Min`;
+        } else {
+          document.getElementById('detalle-permanencia').textContent = 'En Centro';
+        }
+      }
+    } catch (error) {
+      console.error('Error loading visitor data:', error);
+    }
+  }
+
+  // Exit button
+  document.getElementById('btn-salir')?.addEventListener('click', async () => {
+    if (!doc) return;
+
+    try {
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      // Find user ID
+      const userRes = await fetch(`http://localhost:3000/api/usuarios/documento/${doc}`, { headers });
+      const userData = await userRes.json();
+
+      // Register exit
+      const exitRes = await fetch('http://localhost:3000/api/accesos/salida', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ id_usuario: userData.id_usuario })
+      });
+
+      if (exitRes.ok) {
+        const data = await exitRes.json();
+        const nombre = userData.nombre_completo;
+        const escarapela = data.acceso?.id_acceso || 'N/A';
+        window.location.href = `/confirmacion?tipo=salida&nombre=${encodeURIComponent(nombre)}&escarapela=${escarapela}`;
+      } else {
+        const errData = await exitRes.json();
+        alert(errData.message || 'Error al registrar salida');
+      }
+    } catch (error) {
+      console.error('Error registering exit:', error);
+    }
+  });
+
+  loadVisitorData();
+</script>

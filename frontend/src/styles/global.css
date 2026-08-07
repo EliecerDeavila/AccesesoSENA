@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sena-primary: #39A900;
+  --color-sena-primary-light: #5BC200;
+  --color-sena-primary-dark: #2F8F00;
+
+  --color-sena-secondary: #007832;
+  --color-sena-secondary-light: #1C9A45;
+  --color-sena-secondary-dark: #005F28;
+
+  --color-sena-dark: #00304D;
+  --color-sena-dark-light: #1A4F6C;
+  --color-sena-dark-dark: #001F33;
+
+  --color-sena-info: #50E5F9;
+  --color-sena-info-light: #7FF0FF;
+  --color-sena-info-dark: #2CCBDF;
+
+  --color-sena-warning: #FDC300;
+  --color-sena-warning-light: #FFD54F;
+  --color-sena-warning-dark: #E6AA00;
+
+  --color-sena-accent: #71277A;
+  --color-sena-accent-light: #8E3C97;
+  --color-sena-accent-dark: #541B5C;
+
+  --color-sena-error: #D32F2F;
+  --color-sena-error-light: #E57373;
+
+  --color-sena-destructive: #93000A;
+  --color-sena-destructive-light: #B71C1C;
+  --color-sena-destructive-dark: #6D0007;
+
+  --color-sena-neutral-white: #FFFFFF;
+  --color-sena-neutral-100: #F6F6F6;
+  --color-sena-neutral-200: #DCDCDC;
+  --color-sena-neutral-300: #BDBDBD;
+  --color-sena-neutral-500: #6B7280;
+  --color-sena-neutral-black: #000000;
+
+  --font-sans: 'Work Sans', sans-serif;
+
+  --gradient-login: linear-gradient(135deg, #2F8F00, #0E3201);
+  --background-gradient-primary: linear-gradient(135deg, #39A900, #5BC200);
+  --background-gradient-secondary: linear-gradient(135deg, #007832, #1C9A45);
+  --background-gradient-dark: linear-gradient(135deg, #00304D, #1A4F6C);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+@utility bg-gradient-login {
+  background: linear-gradient(135deg, #2F8F00, #0E3201);
+}
+
+@utility bg-gradient-primary {
+  background: linear-gradient(135deg, #39A900, #5BC200);
+}
+
+@utility bg-gradient-secondary {
+  background: linear-gradient(135deg, #007832, #1C9A45);
+}
+
+@utility bg-gradient-dark {
+  background: linear-gradient(135deg, #00304D, #1A4F6C);
+}

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "astro-dev": {
+      "source": "gigio1023/astro-dev-skill",
+      "sourceType": "github",
+      "skillPath": "skills/astro-dev/SKILL.md",
+      "computedHash": "be70cf9db42756685452b8074fac5ce7c2b9a54a2d479d200757648f26914c6b"
+    },
+    "auditing-terraform-infrastructure-for-security": {
+      "source": "mukul975/anthropic-cybersecurity-skills",
+      "sourceType": "github",
+      "skillPath": "skills/auditing-terraform-infrastructure-for-security/SKILL.md",
+      "computedHash": "65fd07a3dcebfdf5265dbc9630f266fd149858e2194c35beeb6e2aa3a75e5033"
+    },
+    "conducting-api-security-testing": {
+      "source": "mukul975/anthropic-cybersecurity-skills",
+      "sourceType": "github",
+      "skillPath": "skills/conducting-api-security-testing/SKILL.md",
+      "computedHash": "cca2b933d82a76c06b57aacfb307feee4646697073b80666ce637219ab4874f3"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "93f53fd1c0352d3d7ec17b8f73d7351bf76f4821e55d123c9d2abc2c53ba48e4"
+    },
+    "nodejs-backend-patterns": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nodejs-backend-patterns/SKILL.md",
+      "computedHash": "185ab660d96db43b1ffc07bc2e226f73890dc21cc23cd1730a907856180bd9df"
+    },
+    "testing-api-security-with-owasp-top-10": {
+      "source": "mukul975/anthropic-cybersecurity-skills",
+      "sourceType": "github",
+      "skillPath": "skills/testing-api-security-with-owasp-top-10/SKILL.md",
+      "computedHash": "d2a81677e0761f251be72f8b8a2e0a19b092dd2853279ee6281cc08f49cf733f"
+    },
+    "testing-jwt-token-security": {
+      "source": "mukul975/anthropic-cybersecurity-skills",
+      "sourceType": "github",
+      "skillPath": "skills/testing-jwt-token-security/SKILL.md",
+      "computedHash": "719d9ab7e7ac123c5199ed929b16fced5748fb36b0cc4fe4d4cb5406b64951c9"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "6b526d013e28073246a36f99b529bc43745d30832ecfa8217b359c34f260ca6b"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    }
+  }
+}

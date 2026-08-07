@@ -1,0 +1,367 @@
+---
+import Layout from '../layout/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Registrar Visitante - Control de Acceso SENA">
+  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Título -->
+    <h1 class="text-2xl font-bold text-sena-dark mb-6">Registrar Nuevo Visitantes</h1>
+
+    <!-- Barra de búsqueda -->
+    <div class="flex gap-4 mb-8">
+      <div class="flex-1 relative">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar visitante"
+          class="w-full pl-4 pr-4 py-3 border border-sena-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent"
+        />
+      </div>
+      <button id="btn-buscar" class="px-6 py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-medium flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        Consultar
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Formulario -->
+      <div class="lg:col-span-2">
+        <form id="registro-form" class="bg-white rounded-xl shadow-sm p-6 space-y-6">
+          <!-- Datos Personales -->
+          <div>
+            <h2 class="text-lg font-semibold text-sena-dark mb-4">Datos Personales</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Nombre Completo</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  placeholder="Nombre Completo"
+                  class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Tipo de Identificación</label>
+                <select
+                  id="tipo-documento"
+                  name="tipo-documento"
+                  class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+                  required
+                >
+                  <option value="">Tipo de Identificación</option>
+                  <option value="CC">Cédula de Ciudadanía</option>
+                  <option value="TI">Tarjeta de Identidad</option>
+                  <option value="CE">Cédula de Extranjería</option>
+                  <option value="PA">Pasaporte</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Número de Identificación</label>
+                <input
+                  type="text"
+                  id="numero-documento"
+                  name="numero-documento"
+                  placeholder="Número de Identificación"
+                  class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Motivo de la visita -->
+          <div>
+            <h2 class="text-lg font-semibold text-sena-dark mb-4">Asunto / Motivo de la visita</h2>
+            <textarea
+              id="motivo-visita"
+              name="motivo-visita"
+              rows="4"
+              placeholder="Asunto / Motivo de la visita"
+              class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Contacto de emergencia -->
+          <div>
+            <h2 class="text-lg font-semibold text-sena-dark mb-4">Contacto de Emergencia</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Nombre de contacto</label>
+                <input
+                  type="text"
+                  id="contacto-nombre"
+                  name="contacto-nombre"
+                  placeholder="Contacto de Emergencia"
+                  class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Tel/Cel de Emergencia</label>
+                <input
+                  type="tel"
+                  id="contacto-telefono"
+                  name="contacto-telefono"
+                  placeholder="Tel/Cel de Emergencia"
+                  class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Número de Escarapela -->
+          <div>
+            <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Número de Escarapela</label>
+            <input
+              type="text"
+              id="escarapela"
+              name="escarapela"
+              placeholder="Número de Escarapela"
+              class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+            />
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="flex flex-wrap gap-4 pt-4">
+            <button
+              type="submit"
+              id="btn-registrar-entrada"
+              class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-medium"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+              Registrar Ingreso
+            </button>
+            <button
+              type="button"
+              id="btn-registrar-salida"
+              class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-sena-secondary text-white rounded-xl hover:bg-sena-secondary-dark transition-colors font-medium"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Registrar Salida
+            </button>
+          </div>
+
+          <!-- Mensaje de error/éxito -->
+          <div id="form-message" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+        </form>
+      </div>
+
+      <!-- Panel lateral -->
+      <div class="space-y-6">
+        <!-- Visitantes en el centro -->
+        <div class="bg-sena-secondary rounded-xl shadow-sm p-6 text-white">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="font-semibold">Visitantes en el centro de formación Actualmente</h3>
+          </div>
+          <p id="aforo-actual" class="text-5xl font-bold text-center py-4">--</p>
+        </div>
+
+        <!-- Últimos Registros -->
+        <div class="bg-sena-primary rounded-xl shadow-sm p-6 text-white">
+          <h3 class="font-semibold mb-4">Últimos Registros</h3>
+          <div id="ultimos-registros" class="space-y-3">
+            <p class="text-white/70 text-sm text-center py-2">Cargando registros...</p>
+          </div>
+          <a href="#" class="block text-center text-white/80 hover:text-white text-sm mt-4 pt-4 border-t border-white/20">
+            Ver bitácora completa
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Check authentication
+  const token = localStorage.getItem('token');
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+  if (!token || (usuario.rol !== 'VIGILANTE' && usuario.rol !== 'ADMINISTRADOR')) {
+    window.location.href = '/';
+  }
+
+  let usuarioEncontrado: any = null;
+
+  // Search for visitor
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const btnBuscar = document.getElementById('btn-buscar');
+
+  btnBuscar?.addEventListener('click', async () => {
+    const doc = searchInput?.value.trim();
+    if (!doc) return;
+
+    try {
+      const headers = { 'Authorization': `Bearer ${token}` };
+      const res = await fetch(`http://localhost:3000/api/usuarios/documento/${doc}`, { headers });
+      
+      if (res.ok) {
+        const data = await res.json();
+        usuarioEncontrado = data;
+        
+        // Fill form with data
+        (document.getElementById('nombre') as HTMLInputElement).value = data.nombre_completo || '';
+        (document.getElementById('tipo-documento') as HTMLSelectElement).value = data.tipo_documento || '';
+        (document.getElementById('numero-documento') as HTMLInputElement).value = data.numero_documento || '';
+        (document.getElementById('contacto-nombre') as HTMLInputElement).value = data.contacto_emergencia || '';
+        (document.getElementById('contacto-telefono') as HTMLInputElement).value = data.telefono_contacto || '';
+        
+        showMessage('Visitante encontrado', 'success');
+      } else {
+        usuarioEncontrado = null;
+        showMessage('Visitante no encontrado. Puede registrarlo como nuevo.', 'info');
+      }
+    } catch (error) {
+      console.error('Error searching:', error);
+    }
+  });
+
+  // Form submission
+  const form = document.getElementById('registro-form') as HTMLFormElement;
+  const btnEntrada = document.getElementById('btn-registrar-entrada');
+  const btnSalida = document.getElementById('btn-registrar-salida');
+
+  async function registrar(tipo: 'entrada' | 'salida') {
+    const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+    const tipoDocumento = (document.getElementById('tipo-documento') as HTMLSelectElement).value;
+    const numeroDocumento = (document.getElementById('numero-documento') as HTMLInputElement).value;
+    const motivoVisita = (document.getElementById('motivo-visita') as HTMLTextAreaElement).value;
+    const contactoNombre = (document.getElementById('contacto-nombre') as HTMLInputElement).value;
+    const contactoTelefono = (document.getElementById('contacto-telefono') as HTMLInputElement).value;
+    const escarapela = (document.getElementById('escarapela') as HTMLInputElement).value;
+
+    if (!nombre || !tipoDocumento || !numeroDocumento) {
+      showMessage('Por favor complete los campos obligatorios', 'error');
+      return;
+    }
+
+    try {
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      let userId = usuarioEncontrado?.id_usuario;
+
+      // Create user if not exists
+      if (!userId) {
+        const userRes = await fetch('http://localhost:3000/api/usuarios', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            numero_documento: numeroDocumento,
+            tipo_documento: tipoDocumento,
+            nombre_completo: nombre,
+            id_rol: 5, // VISITANTE role
+            telefono_contacto: contactoTelefono,
+            contacto_emergencia: contactoNombre
+          })
+        });
+
+        if (!userRes.ok) {
+          const errData = await userRes.json();
+          throw new Error(errData.message || 'Error al crear usuario');
+        }
+
+        const userData = await userRes.json();
+        userId = userData.usuario.id_usuario;
+      }
+
+      // Register entry or exit
+      const endpoint = tipo === 'entrada' ? 'entrada' : 'salida';
+      const body = tipo === 'entrada' 
+        ? { id_usuario: userId, motivo_visita: motivoVisita }
+        : { id_usuario: userId };
+
+      const res = await fetch(`http://localhost:3000/api/accesos/${endpoint}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const escarapelaNum = data.acceso?.id_acceso || 'N/A';
+        window.location.href = `/confirmacion?tipo=${tipo}&nombre=${encodeURIComponent(nombre)}&escarapela=${escarapelaNum}`;
+      } else {
+        const errData = await res.json();
+        throw new Error(errData.message || 'Error al registrar');
+      }
+    } catch (error) {
+      showMessage(error instanceof Error ? error.message : 'Error al procesar', 'error');
+    }
+  }
+
+  btnEntrada?.addEventListener('click', (e) => {
+    e.preventDefault();
+    registrar('entrada');
+  });
+
+  btnSalida?.addEventListener('click', () => {
+    registrar('salida');
+  });
+
+  function showMessage(msg: string, type: 'success' | 'error' | 'info') {
+    const el = document.getElementById('form-message');
+    if (!el) return;
+    
+    el.textContent = msg;
+    el.className = 'rounded-lg px-4 py-3 text-sm';
+    
+    if (type === 'success') el.classList.add('bg-green-100', 'text-green-700');
+    else if (type === 'error') el.classList.add('bg-red-100', 'text-red-700');
+    else el.classList.add('bg-blue-100', 'text-blue-700');
+    
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 5000);
+  }
+
+  // Load side panel data
+  async function loadSidePanel() {
+    try {
+      const headers = { 'Authorization': `Bearer ${token}` };
+      
+      // Load aforo
+      const aforoRes = await fetch('http://localhost:3000/api/reportes/aforo', { headers });
+      const aforoData = await aforoRes.json();
+      document.getElementById('aforo-actual').textContent = aforoData.aforo_actual || '0';
+
+      // Load recent accesses
+      const accesosRes = await fetch('http://localhost:3000/api/accesos', { headers });
+      const accesosData = await accesosRes.json();
+      const registrosEl = document.getElementById('ultimos-registros');
+      
+      if (Array.isArray(accesosData) && accesosData.length > 0) {
+        registrosEl.innerHTML = accesosData.slice(0, 3).map((a: any) => {
+          const esEntrada = !a.hora_salida;
+          return `
+            <div class="flex items-center justify-between text-sm">
+              <div>
+                <p class="font-medium">${a.usuario?.nombre_completo || 'N/A'}</p>
+                <p class="text-white/70 text-xs">${esEntrada ? 'Entrada' : 'Salida'} • ${esEntrada ? a.hora_entrada : a.hora_salida}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    } catch (error) {
+      console.error('Error loading side panel:', error);
+    }
+  }
+
+  loadSidePanel();
+</script>

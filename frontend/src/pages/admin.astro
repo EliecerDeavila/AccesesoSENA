@@ -1,0 +1,313 @@
+---
+import Layout from '../layout/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Panel de Control General - Admin">
+  <Navbar usuario="Administrador" cargo="Administrador del Sistema" rol="ADMINISTRADOR" activePage="inicio" />
+  
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Encabezado -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <div>
+        <h1 class="text-2xl font-bold text-sena-dark">Panel de Control General</h1>
+        <p class="text-sena-neutral-500 text-sm">Consulta, genera y exporta información del ingreso al centro náutico.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <!-- Selector temporal -->
+        <div class="flex bg-sena-neutral-100 rounded-lg p-1">
+          <button id="btn-diario" class="time-selector px-4 py-2 rounded-md text-sm font-medium bg-sena-primary text-white transition-all">Diario</button>
+          <button id="btn-semanal" class="time-selector px-4 py-2 rounded-md text-sm font-medium text-sena-neutral-500 hover:text-sena-dark transition-all">Semanal</button>
+          <button id="btn-mensual" class="time-selector px-4 py-2 rounded-md text-sm font-medium text-sena-neutral-500 hover:text-sena-dark transition-all">Mensual</button>
+        </div>
+        <!-- Botón nuevo registro -->
+        <a href="/registro" class="flex items-center gap-2 px-4 py-2 bg-sena-primary text-white rounded-lg hover:bg-sena-primary-dark transition-colors font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+          Nuevo registro
+        </a>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Aforo actual -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-primary">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sena-neutral-500 text-sm">Aforo actual</p>
+            <p id="kpi-aforo" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+          </div>
+          <div class="w-12 h-12 bg-sena-primary/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-sena-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total de Visitantes -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-accent">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sena-neutral-500 text-sm">Total de Visitantes</p>
+            <p id="kpi-visitantes" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+          </div>
+          <div class="w-12 h-12 bg-sena-accent/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-sena-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total de ingresos semanales -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-dark">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sena-neutral-500 text-sm">Total de ingresos semanales</p>
+            <p id="kpi-ingresos" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+          </div>
+          <div class="w-12 h-12 bg-sena-dark/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-sena-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salidas pendientes -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-warning">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sena-neutral-500 text-sm">Salidas pendientes</p>
+            <p id="kpi-pendientes" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+          </div>
+          <div class="w-12 h-12 bg-sena-warning/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-sena-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico y Resumen -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Gráfico de barras -->
+      <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-sena-dark">Ingresos y Salidas Diarios</h2>
+          <div class="flex items-center gap-4 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-sena-primary rounded-full"></div>
+              <span class="text-sena-neutral-500">Ingresos</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-sena-neutral-300 rounded-full"></div>
+              <span class="text-sena-neutral-500">Salidas</span>
+            </div>
+          </div>
+        </div>
+        <div class="h-64">
+          <canvas id="stats-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Resumen del mes -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-sena-dark mb-4">Resumen del mes</h2>
+        <div class="space-y-6">
+          <div class="flex justify-between items-center pb-4 border-b border-sena-neutral-200">
+            <span class="text-sena-neutral-500">Total del mes</span>
+            <span id="resumen-total" class="text-xl font-bold text-sena-dark">--</span>
+          </div>
+          <div class="flex justify-between items-center pb-4 border-b border-sena-neutral-200">
+            <span class="text-sena-neutral-500">Promedio Diario</span>
+            <span id="resumen-promedio" class="text-xl font-bold text-sena-dark">--</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-sena-neutral-500">Permanencia Prom.</span>
+            <span id="resumen-permanencia" class="text-xl font-bold text-sena-primary">--</span>
+          </div>
+        </div>
+
+        <!-- Botones de exportación -->
+        <div class="mt-8 space-y-3">
+          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-dark text-white rounded-lg hover:bg-sena-dark-dark transition-colors font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Exportar PDF
+          </button>
+          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-secondary text-white rounded-lg hover:bg-sena-secondary-dark transition-colors font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Exportar Excel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de actividad reciente -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold text-sena-dark">Actividad Reciente</h2>
+        <a href="#" class="text-sena-primary hover:text-sena-primary-dark text-sm font-medium">Ver todo</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-sena-neutral-200">
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Nombre</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Tipo de usuario</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Hora Entrada</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Hora Salida</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Permanencia</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="activity-table">
+            <tr>
+              <td colspan="6" class="py-8 text-center text-sena-neutral-500">Cargando actividad...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Check authentication
+  const token = localStorage.getItem('token');
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+
+  if (!token || usuario.rol !== 'ADMINISTRADOR') {
+    window.location.href = '/';
+  }
+
+  // Time selector functionality
+  const timeButtons = document.querySelectorAll('.time-selector');
+  timeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      timeButtons.forEach(b => {
+        b.classList.remove('bg-sena-primary', 'text-white');
+        b.classList.add('text-sena-neutral-500');
+      });
+      btn.classList.add('bg-sena-primary', 'text-white');
+      btn.classList.remove('text-sena-neutral-500');
+    });
+  });
+
+  // Initialize chart
+  const ctx = document.getElementById('stats-chart') as HTMLCanvasElement;
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['01-abr', '02-abr', '03-abr', '04-abr', '05-abr', '06-abr', '07-abr', '08-abr'],
+        datasets: [
+          {
+            label: 'Ingresos',
+            data: [110, 120, 100, 130, 108, 125, 95, 115],
+            backgroundColor: '#39A900',
+            borderRadius: 4,
+          },
+          {
+            label: 'Salidas',
+            data: [40, 75, 55, 78, 53, 88, 80, 72],
+            backgroundColor: '#DCDCDC',
+            borderRadius: 4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: '#F6F6F6',
+            }
+          },
+          x: {
+            grid: {
+              display: false,
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Load data from API
+  async function loadDashboardData() {
+    try {
+      const headers = { 'Authorization': `Bearer ${token}` };
+      
+      // Load aforo
+      const aforoRes = await fetch('http://localhost:3000/api/reportes/aforo', { headers });
+      const aforoData = await aforoRes.json();
+      document.getElementById('kpi-aforo').textContent = aforoData.aforo_actual || '0';
+
+      // Load general reports
+      const reportesRes = await fetch('http://localhost:3000/api/reportes', { headers });
+      const reportesData = await reportesRes.json();
+      document.getElementById('kpi-ingresos').textContent = reportesData.total_accesos || '0';
+      document.getElementById('kpi-pendientes').textContent = reportesData.sin_salida || '0';
+      document.getElementById('resumen-total').textContent = reportesData.total_accesos || '0';
+      
+      // Calculate average
+      const total = parseInt(reportesData.total_accesos) || 0;
+      document.getElementById('resumen-promedio').textContent = Math.round(total / 30).toString();
+      document.getElementById('resumen-permanencia').textContent = '4 H';
+
+      // Load users for visitor count
+      const usuariosRes = await fetch('http://localhost:3000/api/usuarios/listar', { headers });
+      const usuariosData = await usuariosRes.json();
+      const visitantes = Array.isArray(usuariosData) ? usuariosData.filter((u: any) => u.rol?.nombre === 'VISITANTE').length : 0;
+      document.getElementById('kpi-visitantes').textContent = visitantes.toString();
+
+      // Load recent activity
+      const accesosRes = await fetch('http://localhost:3000/api/accesos', { headers });
+      const accesosData = await accesosRes.json();
+      const tableBody = document.getElementById('activity-table');
+      
+      if (Array.isArray(accesosData) && accesosData.length > 0) {
+        tableBody.innerHTML = accesosData.slice(0, 5).map((acceso: any) => `
+          <tr class="border-b border-sena-neutral-100 hover:bg-sena-neutral-100">
+            <td class="py-3 px-4 text-sm text-sena-dark">${acceso.usuario?.nombre_completo || 'N/A'}</td>
+            <td class="py-3 px-4 text-sm text-sena-neutral-500">${acceso.usuario?.rol?.nombre || 'N/A'}</td>
+            <td class="py-3 px-4 text-sm text-sena-dark">${acceso.hora_entrada || '--'}</td>
+            <td class="py-3 px-4 text-sm text-sena-dark">${acceso.hora_salida || '<span class="text-sena-primary font-medium">En Centro</span>'}</td>
+            <td class="py-3 px-4 text-sm text-sena-dark">${acceso.hora_salida ? 'Calculando...' : '<span class="text-sena-primary font-medium">En Centro</span>'}</td>
+            <td class="py-3 px-4">
+              <button class="text-sena-primary hover:text-sena-primary-dark">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } else {
+        tableBody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-sena-neutral-500">No hay actividad reciente</td></tr>';
+      }
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+    }
+  }
+
+  loadDashboardData();
+</script>
