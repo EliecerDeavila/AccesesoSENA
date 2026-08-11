@@ -27,27 +27,27 @@ import Navbar from '../components/Navbar.astro';
           </div>
           
           <div class="space-y-4">
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Nombre completo</span>
               <span id="detalle-nombre" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Documento</span>
               <span id="detalle-documento" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Rol</span>
               <span id="detalle-rol" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Contacto</span>
               <span id="detalle-contacto" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Contacto de emergencia</span>
               <span id="detalle-emergencia-nombre" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2">
               <span class="text-sena-neutral-500">Número de emergencia</span>
               <span id="detalle-emergencia-telefono" class="font-medium text-sena-dark">--</span>
             </div>
@@ -68,23 +68,23 @@ import Navbar from '../components/Navbar.astro';
           </div>
           
           <div class="space-y-4">
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Fecha</span>
               <span id="detalle-fecha" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Hora de entrada</span>
               <span id="detalle-entrada" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Hora de salida</span>
               <span id="detalle-salida" class="font-medium text-sena-dark">--</span>
             </div>
-            <div class="flex justify-between py-2 border-b border-sena-neutral-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-sena-neutral-200">
               <span class="text-sena-neutral-500">Tiempo total de permanencia</span>
               <span id="detalle-permanencia" class="font-bold text-sena-primary text-lg">--</span>
             </div>
-            <div class="flex justify-between py-2">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 py-2">
               <span class="text-sena-neutral-500">Escarapela asignada</span>
               <span id="detalle-escarapela" class="font-medium text-sena-dark">#--</span>
             </div>
@@ -113,10 +113,12 @@ import Navbar from '../components/Navbar.astro';
 <script>
   // Check authentication
   const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const usuarioStr = localStorage.getItem('usuario');
+  const usuario = usuarioStr ? JSON.parse(usuarioStr) : {};
 
-  if (!token || (usuario.rol !== 'VIGILANTE' && usuario.rol !== 'ADMINISTRADOR')) {
+  if (!token || !['ADMINISTRADOR', 'VIGILANTE'].includes(usuario.rol)) {
     window.location.href = '/';
+    return;
   }
 
   // Get document from URL params

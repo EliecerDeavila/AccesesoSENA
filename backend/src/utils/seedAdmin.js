@@ -11,7 +11,7 @@ const seedAdmin = async () => {
     }
 
     const adminExiste = await Usuario.findOne({
-      where: { numero_documento: '1000000000', eliminado: false }
+      where: { numero_documento: '1143387774', eliminado: false }
     });
 
     if (adminExiste) {
@@ -23,7 +23,7 @@ const seedAdmin = async () => {
     const passwordHash = await bcrypt.hash(adminPassword, 10);
 
     await Usuario.create({
-      numero_documento: '1000000000',
+      numero_documento: '1143387774',
       tipo_documento: 'CC',
       nombre_completo: 'Administrador General',
       id_rol: adminRol.id_rol,
@@ -32,7 +32,7 @@ const seedAdmin = async () => {
       password_hash: passwordHash
     });
 
-    console.log('✅ Usuario admin creado (doc: 1000000000, pass: ' + adminPassword + ')');
+    console.log('✅ Usuario admin creado (doc: 1143387774, pass: ' + adminPassword + ')');
     console.log('⚠️  IMPORTANTE: Cambia esta contraseña después del primer login');
   } catch (error) {
     console.error('❌ Error al crear admin:', error.message);

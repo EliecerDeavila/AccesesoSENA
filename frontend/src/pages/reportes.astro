@@ -1,0 +1,185 @@
+---
+import Layout from '../layout/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Reportes - Control de Acceso SENA">
+  <Navbar usuario="Administrador" cargo="Administrador del Sistema" rol="ADMINISTRADOR" activePage="reporte" />
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Encabezado -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <div>
+        <h1 class="text-2xl font-bold text-sena-dark">Reportes de Acceso</h1>
+        <p class="text-sena-neutral-500 text-sm">Consulta y exporta el historial completo de ingresos y salidas.</p>
+      </div>
+    </div>
+
+    <!-- Filtros de fecha -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+      <h2 class="text-lg font-semibold text-sena-dark mb-4">Filtrar por rango de fechas</h2>
+      <div class="flex flex-col sm:flex-row gap-4 items-end">
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Fecha Inicio</label>
+          <input
+            type="date"
+            id="fecha-inicio"
+            class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+          />
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-sena-neutral-500 mb-2">Fecha Fin</label>
+          <input
+            type="date"
+            id="fecha-fin"
+            class="w-full px-4 py-3 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary"
+          />
+        </div>
+        <button id="btn-filtrar" class="px-6 py-3 bg-sena-primary text-white rounded-lg hover:bg-sena-primary-dark transition-colors font-medium flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filtrar
+        </button>
+        <button id="btn-limpiar" class="px-6 py-3 bg-sena-neutral-200 text-sena-dark rounded-lg hover:bg-sena-neutral-300 transition-colors font-medium">
+          Limpiar
+        </button>
+      </div>
+    </div>
+
+    <!-- Tarjetas resumen -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-primary">
+        <p class="text-sena-neutral-500 text-sm">Total de Accesos</p>
+        <p id="resumen-total" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-secondary">
+        <p class="text-sena-neutral-500 text-sm">Con Salida Registrada</p>
+        <p id="resumen-salida" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-sena-warning">
+        <p class="text-sena-neutral-500 text-sm">Sin Salida (En Centro)</p>
+        <p id="resumen-pendiente" class="text-3xl font-bold text-sena-dark mt-1">--</p>
+      </div>
+    </div>
+
+    <!-- Tabla de reportes -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold text-sena-dark">Historial de Accesos</h2>
+        <div class="flex gap-2">
+          <button id="btn-exportar-pdf" class="flex items-center gap-2 px-4 py-2 bg-sena-dark text-white rounded-lg hover:bg-sena-dark-dark transition-colors text-sm font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            PDF
+          </button>
+          <button id="btn-exportar-excel" class="flex items-center gap-2 px-4 py-2 bg-sena-secondary text-white rounded-lg hover:bg-sena-secondary-dark transition-colors text-sm font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Excel
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-sena-neutral-200">
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Nombre</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Documento</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Fecha</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Hora Entrada</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Hora Salida</th>
+              <th class="text-left py-3 px-4 text-sm font-medium text-sena-neutral-500">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="reportes-table">
+            <tr>
+              <td colspan="6" class="py-8 text-center text-sena-neutral-500">Cargando reportes...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const usuarioStr = localStorage.getItem('usuario');
+    const usuario = usuarioStr ? JSON.parse(usuarioStr) : {};
+
+    if (!token || usuario.rol !== 'ADMINISTRADOR') {
+      window.location.href = '/';
+      return;
+    }
+
+    const headers = { 'Authorization': `Bearer ${token}` };
+
+    async function cargarReportes(fechaInicio?: string, fechaFin?: string) {
+      try {
+        let url = 'http://localhost:3000/api/reportes';
+        if (fechaInicio && fechaFin) {
+          url += `/por-fecha?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`;
+        }
+
+        const res = await fetch(url, { headers });
+        const data = await res.json();
+
+        document.getElementById('resumen-total').textContent = data.total_accesos || '0';
+        document.getElementById('resumen-salida').textContent = data.con_salida || '0';
+        document.getElementById('resumen-pendiente').textContent = data.sin_salida || '0';
+
+        const tableBody = document.getElementById('reportes-table');
+        const accesos = data.accesos || [];
+
+        if (accesos.length > 0) {
+          tableBody.innerHTML = accesos.map((a: any) => {
+            const enCentro = !a.hora_salida;
+            return `
+              <tr class="border-b border-sena-neutral-100 hover:bg-sena-neutral-100">
+                <td class="py-3 px-4 text-sm text-sena-dark">${a.usuario?.nombre_completo || 'N/A'}</td>
+                <td class="py-3 px-4 text-sm text-sena-neutral-500">${a.usuario?.numero_documento || 'N/A'}</td>
+                <td class="py-3 px-4 text-sm text-sena-dark">${a.fecha || 'N/A'}</td>
+                <td class="py-3 px-4 text-sm text-sena-dark">${a.hora_entrada || '--'}</td>
+                <td class="py-3 px-4 text-sm text-sena-dark">${a.hora_salida || '--'}</td>
+                <td class="py-3 px-4 text-sm">
+                  ${enCentro
+                    ? '<span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">En Centro</span>'
+                    : '<span class="px-2 py-1 bg-sena-neutral-100 text-sena-neutral-500 rounded-full text-xs font-medium">Retirado</span>'
+                  }
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tableBody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-sena-neutral-500">No hay registros para el rango seleccionado</td></tr>';
+        }
+      } catch (error) {
+        console.error('Error loading reports:', error);
+      }
+    }
+
+    document.getElementById('btn-filtrar')?.addEventListener('click', () => {
+      const fechaInicio = (document.getElementById('fecha-inicio') as HTMLInputElement).value;
+      const fechaFin = (document.getElementById('fecha-fin') as HTMLInputElement).value;
+
+      if (!fechaInicio || !fechaFin) {
+        alert('Seleccione ambas fechas');
+        return;
+      }
+
+      cargarReportes(fechaInicio, fechaFin);
+    });
+
+    document.getElementById('btn-limpiar')?.addEventListener('click', () => {
+      (document.getElementById('fecha-inicio') as HTMLInputElement).value = '';
+      (document.getElementById('fecha-fin') as HTMLInputElement).value = '';
+      cargarReportes();
+    });
+
+    cargarReportes();
+  });
+</script>

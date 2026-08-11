@@ -56,7 +56,7 @@ body {
 }
 
 @utility bg-gradient-login {
-  background: linear-gradient(135deg, #2F8F00, #0E3201);
+  background: linear-gradient(135deg, #2F8F00 0%, #2F8F00 20%, #0E3201 100%);
 }
 
 @utility bg-gradient-primary {

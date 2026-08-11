@@ -43,6 +43,12 @@
       "skillPath": "skills/testing-jwt-token-security/SKILL.md",
       "computedHash": "719d9ab7e7ac123c5199ed929b16fced5748fb36b0cc4fe4d4cb5406b64951c9"
     },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "6cb585d36a0d0418986bc8449bc0c8ff216344d692e08245d7f9e7414fee11a6"
+    },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",

@@ -4,6 +4,7 @@ const ACCEPTED_ORIGINS = [
   "http://localhost:3000",
   "http://localhost:5173",
   "http://localhost:8080",
+  "http://localhost:4321",
 ];
 
 const corsMiddleware = (acceptedOrigins = ACCEPTED_ORIGINS) =>

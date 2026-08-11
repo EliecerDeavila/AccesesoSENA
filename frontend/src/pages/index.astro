@@ -3,31 +3,109 @@ import Layout from '../layout/Layout.astro';
 ---
 
 <Layout title="Iniciar Sesión - Control de Acceso SENA">
-  <main class="min-h-screen flex bg-gradient-login">
-    <!-- Panel Izquierdo (55%) -->
-    <div class="hidden lg:flex lg:w-[55%] relative overflow-hidden items-center justify-center p-8">
+  <style>
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeUpDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    @keyframes pulseBtn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(57, 169, 0, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(57, 169, 0, 0); }
+    }
+    .animate-slide-left { animation: slideInLeft 0.8s ease-out both; }
+    .animate-slide-right { animation: slideInRight 0.8s ease-out 0.2s both; }
+    .animate-fade-up { animation: fadeInUp 0.6s ease-out 0.4s both; }
+    .animate-bounce-in { animation: bounceIn 1s ease-out 0.3s both; }
+    .animate-float { animation: fadeUpDown 4s ease-in-out infinite; }
+    .animate-float-delay { animation: fadeUpDown 4s ease-in-out 1s infinite; }
+    .animate-float-slow { animation: fadeUpDown 5s ease-in-out 0.5s infinite; }
+    .animate-shake { animation: shake 0.4s ease-in-out; }
+    .btn-glow:hover { animation: pulseBtn 1.5s infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-slide-left,
+      .animate-slide-right,
+      .animate-fade-up,
+      .animate-bounce-in,
+      .animate-float,
+      .animate-float-delay,
+      .animate-float-slow,
+      .animate-shake,
+      .btn-glow:hover {
+        animation: none;
+      }
+    }
+  </style>
+  <main class="h-screen flex gap-2 lg:gap-4 bg-gradient-login relative overflow-hidden">
+    <!-- Figura 2: centro superior, pegada arriba -->
+      <img src="/image/figuras/Figura 2.svg" alt="" width="434" height="333" class="absolute top-[-20px] left-1/2 -translate-x-1/2 w-[min(384px,80vw)] mix-blend-soft-light z-0 animate-float" />
+    <!-- Figura 5: centro inferior, pegada abajo -->
+      <img src="/image/figuras/figura 5.svg" alt="" width="468" height="294" class="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-[min(384px,80vw)] mix-blend-soft-light z-0 animate-float-delay" />
+    <!-- Figura 4: parte superior derecha -->
+      <img src="/image/figuras/figura 4.svg" alt="" width="325" height="299" class="absolute top-[20px] right-[20px] w-[min(325px,50vw)] mix-blend-soft-light z-0 animate-float-slow" />
+
+    <!-- Panel Izquierdo (50%) -->
+    <div class="hidden lg:flex lg:w-[50%] relative items-stretch overflow-hidden">
+      <!-- Figura 1: parte inferior visible, superior recortada -->
+      <img src="/image/figuras/Figura 1.svg" alt="" width="477" height="680" class="absolute bottom-[100px] left-[20px] w-[min(476px,80vw)] mix-blend-soft-light z-0 animate-float" />
+
+      <!-- Glass: responsive por breakpoint -->
+      <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[250px] lg:w-[600px] lg:h-[350px] xl:w-[800px] xl:h-[400px] bg-white/10 backdrop-blur-md border-r border-white/20 rounded-r-[20px] lg:rounded-r-[30px] xl:rounded-r-[40px] z-10 animate-slide-left"></div>
+      
       <!-- Tarjeta informativa glassmorphism -->
-      <div class="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-8 max-w-md border border-white/20 shadow-2xl">
-        <h2 class="text-white text-3xl font-bold mb-2">Sistema de Control de Acceso</h2>
-        <div class="w-full h-px bg-white/30 my-4"></div>
-        <p class="text-white/90 text-sm leading-relaxed mb-4">
-          Administra el ingreso y salida de manera organizada y en tiempo real.
-        </p>
-        <p class="text-white font-bold text-lg">SENA - Náutico, Fluvial y Portuario</p>
+      <div class="relative z-10 flex items-center p-4 sm:p-8 ml-[20px] sm:ml-[50px] animate-slide-left">
+        <div class="p-4 sm:p-8 max-w-md">
+         <span class="text-white/70 text-2xl sm:text-3xl font-light mb-2 block">Sistema de</span>
+          <h2 class="text-white mb-2 w-full font-bold text-3xl sm:text-4xl" style="text-wrap: balance;">Control de Acceso</h2>
+          <div class="w-full h-px bg-white/30 my-4"></div>
+          <p class="text-white/90 text-sm leading-relaxed mb-4">
+            Administra el ingreso y salida de manera organizada y en tiempo real.
+          </p>
+          <p class="text-white font-bold text-base sm:text-lg">SENA - Náutico, Fluvial y Portuario</p>
+        </div>
       </div>
     </div>
 
-    <!-- Panel Derecho (45%) - Formulario -->
-    <div class="w-full lg:w-[45%] flex items-center justify-center p-4 bg-white/10 backdrop-blur-md border-l border-white/20">
-      <div class="w-full max-w-md">
+    <!-- Panel Derecho (50%) - Formulario -->
+    <div class="relative w-full lg:w-[50%] flex items-center justify-center p-4 overflow-hidden">
+      <!-- Figura 3: debajo del botón Iniciar, detrás del glass, 100px a la derecha -->
+      <img src="/image/figuras/figura 3.svg" alt="" width="429" height="362" class="absolute bottom-[30px] left-[calc(50%+100px)] -translate-x-1/2 w-[min(384px,80vw)] z-0 animate-float-slow" />
+
+      <!-- Glass overlay -->
+      <div class="absolute inset-0 bg-white/10 backdrop-blur-md border-l border-white/20 z-10 animate-slide-right"></div>
+
+      <div class="w-full max-w-md relative z-20 animate-slide-right">
         <!-- Logo -->
-        <div class="flex flex-col items-center mb-8">
-          <img src="/image/Logo Blanco.svg" alt="Logo SENA" class="h-20 mb-4" />
-          <h1 class="text-white text-2xl font-bold text-center">Iniciar Sesión</h1>
+        <div class="flex flex-col items-center mb-8 animate-bounce-in">
+          <img src="/image/Logo Blanco.svg" alt="Logo SENA" width="64" height="62" class="h-14 sm:h-16 lg:h-20 mb-4" />
+          <h1 class="text-white text-xl sm:text-2xl font-bold text-center">Iniciar Sesión</h1>
         </div>
 
         <!-- Formulario -->
-        <form id="login-form" class="space-y-6">
+        <form id="login-form" class="space-y-6 animate-fade-up touch-manipulation">
           <!-- Campo Usuario -->
           <div>
             <label for="numero_documento" class="block text-white text-sm font-medium mb-2">
@@ -38,8 +116,9 @@ import Layout from '../layout/Layout.astro';
                 type="text"
                 id="numero_documento"
                 name="numero_documento"
+                autocomplete="username"
                 placeholder="Ingrese su usuario"
-                class="w-full pl-12 pr-4 py-3 bg-black/25 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-sena-primary-light focus:border-transparent transition-all"
+                class="w-full pl-12 pr-4 py-3 bg-black/25 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-sena-primary-light focus:border-transparent transition-[border-color,box-shadow]"
                 required
               />
               <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,14 +137,15 @@ import Layout from '../layout/Layout.astro';
                 type="password"
                 id="password"
                 name="password"
+                autocomplete="current-password"
                 placeholder="Ingrese su contraseña"
-                class="w-full pl-12 pr-12 py-3 bg-black/25 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-sena-primary-light focus:border-transparent transition-all"
+                class="w-full pl-12 pr-12 py-3 bg-black/25 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-sena-primary-light focus:border-transparent transition-[border-color,box-shadow]"
                 required
               />
               <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <button type="button" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white">
+              <button type="button" id="toggle-password" aria-label="Mostrar contraseña" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -81,7 +161,7 @@ import Layout from '../layout/Layout.astro';
           <button
             type="submit"
             id="btn-login"
-            class="w-full py-3 bg-gradient-primary border border-white rounded-lg text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg"
+            class="w-full py-3 bg-gradient-primary border border-white rounded-lg text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg btn-glow"
           >
             Iniciar
           </button>
@@ -157,6 +237,9 @@ import Layout from '../layout/Layout.astro';
       if (errorMessage) {
         errorMessage.textContent = error instanceof Error ? error.message : 'Error al iniciar sesión';
         errorMessage.classList.remove('hidden');
+        errorMessage.classList.remove('animate-shake');
+        void errorMessage.offsetWidth;
+        errorMessage.classList.add('animate-shake');
       }
     } finally {
       if (btnLogin) {

@@ -11,7 +11,7 @@ import Navbar from '../components/Navbar.astro';
     <h1 class="text-2xl font-bold text-sena-dark mb-6">Registrar Nuevo Visitantes</h1>
 
     <!-- Barra de búsqueda -->
-    <div class="flex gap-4 mb-8">
+    <div class="flex flex-col sm:flex-row gap-4 mb-8">
       <div class="flex-1 relative">
         <input
           type="text"
@@ -189,10 +189,12 @@ import Navbar from '../components/Navbar.astro';
 <script>
   // Check authentication
   const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const usuarioStr = localStorage.getItem('usuario');
+  const usuario = usuarioStr ? JSON.parse(usuarioStr) : {};
 
-  if (!token || (usuario.rol !== 'VIGILANTE' && usuario.rol !== 'ADMINISTRADOR')) {
+  if (!token || !['ADMINISTRADOR', 'VIGILANTE'].includes(usuario.rol)) {
     window.location.href = '/';
+    return;
   }
 
   let usuarioEncontrado: any = null;

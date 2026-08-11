@@ -13,7 +13,7 @@ import Navbar from '../components/Navbar.astro';
         <h1 class="text-2xl font-bold text-sena-dark">Panel de Control General</h1>
         <p class="text-sena-neutral-500 text-sm">Consulta, genera y exporta información del ingreso al centro náutico.</p>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex flex-wrap items-center gap-4">
         <!-- Selector temporal -->
         <div class="flex bg-sena-neutral-100 rounded-lg p-1">
           <button id="btn-diario" class="time-selector px-4 py-2 rounded-md text-sm font-medium bg-sena-primary text-white transition-all">Diario</button>
@@ -182,13 +182,21 @@ import Navbar from '../components/Navbar.astro';
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Check authentication
-  const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication
+    const token = localStorage.getItem('token');
+    const usuarioStr = localStorage.getItem('usuario');
+    const usuario = usuarioStr ? JSON.parse(usuarioStr) : {};
 
-  if (!token || usuario.rol !== 'ADMINISTRADOR') {
-    window.location.href = '/';
-  }
+    console.log('Token:', token ? 'presente' : 'ausente');
+    console.log('Usuario:', usuario);
+    console.log('Rol:', usuario.rol);
+
+    if (!token || usuario.rol !== 'ADMINISTRADOR') {
+      console.log('Auth check failed, redirecting to login');
+      window.location.href = '/';
+      return;
+    }
 
   // Time selector functionality
   const timeButtons = document.querySelectorAll('.time-selector');
@@ -310,4 +318,5 @@ import Navbar from '../components/Navbar.astro';
   }
 
   loadDashboardData();
+  });
 </script>

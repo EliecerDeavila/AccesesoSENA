@@ -167,13 +167,16 @@ import Navbar from '../components/Navbar.astro';
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Check authentication
-  const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication
+    const token = localStorage.getItem('token');
+    const usuarioStr = localStorage.getItem('usuario');
+    const usuario = usuarioStr ? JSON.parse(usuarioStr) : {};
 
-  if (!token || usuario.rol !== 'VIGILANTE') {
-    window.location.href = '/';
-  }
+    if (!token || usuario.rol !== 'VIGILANTE') {
+      window.location.href = '/';
+      return;
+    }
 
   // Initialize chart
   const ctx = document.getElementById('stats-chart') as HTMLCanvasElement;
@@ -301,4 +304,5 @@ import Navbar from '../components/Navbar.astro';
   });
 
   loadDashboardData();
+  });
 </script>
