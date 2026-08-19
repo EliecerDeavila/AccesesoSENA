@@ -1,0 +1,120 @@
+---
+import Layout from '../layout/Layout.astro';
+
+interface Props {
+  code: string;
+  title: string;
+  description: string;
+  actionText?: string;
+  actionHref?: string;
+}
+
+const {
+  code,
+  title,
+  description,
+  actionText = 'Volver al Inicio',
+  actionHref = '/',
+} = Astro.props;
+---
+
+<Layout title={`${code} - ${title}`} description={description} showFooter={false}>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(3deg); }
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(-2deg); }
+    }
+    @keyframes pulseBtn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(57, 169, 0, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(57, 169, 0, 0); }
+    }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease-out both; }
+    .animate-fade-in { animation: fadeIn 1s ease-out both; }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-slow { animation: floatSlow 7s ease-in-out 1s infinite; }
+    .btn-glow:hover { animation: pulseBtn 1.5s infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in-up,
+      .animate-fade-in,
+      .animate-float,
+      .animate-float-slow,
+      .btn-glow:hover {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <main class="h-screen flex items-center justify-center bg-gradient-login relative overflow-hidden">
+    <!-- SVG decorativo superior -->
+    <img
+      src="/image/figuras/Figura 2.svg"
+      alt=""
+      class="absolute -top-8 left-1/2 -translate-x-1/2 w-48 md:w-72 lg:w-96 pointer-events-none mix-blend-soft-light z-0 animate-float"
+    />
+
+    <!-- SVG decorativo inferior -->
+    <img
+      src="/image/figuras/figura 5.svg"
+      alt=""
+      class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-48 md:w-72 lg:w-96 pointer-events-none mix-blend-soft-light z-0 animate-float-slow"
+    />
+
+    <!-- SVG decorativo izquierda -->
+    <img
+      src="/image/figuras/Figura 1.svg"
+      alt=""
+      class="absolute bottom-20 -left-10 w-40 md:w-56 pointer-events-none mix-blend-soft-light z-0 animate-float opacity-50"
+    />
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 text-center px-4 max-w-lg animate-fade-in-up">
+      <!-- Código de error -->
+      <div class="relative inline-block mb-6">
+        <span class="text-[120px] md:text-[160px] font-bold text-white/10 leading-none select-none">
+          {code}
+        </span>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-6xl md:text-8xl font-bold text-white/90">
+            {code}
+          </span>
+        </div>
+      </div>
+
+      <!-- Título -->
+      <h1 class="text-white text-2xl md:text-3xl font-bold mb-4">
+        {title}
+      </h1>
+
+      <!-- Descripción -->
+      <p class="text-white/70 text-base md:text-lg mb-8 leading-relaxed">
+        {description}
+      </p>
+
+      <!-- Botón de acción -->
+      <a
+        href={actionHref}
+        class="inline-block px-8 py-3 bg-gradient-primary border border-white/20 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity shadow-lg btn-glow"
+      >
+        {actionText}
+      </a>
+    </div>
+
+    <!-- Logo SENA abajo -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fade-in" style="animation-delay: 0.5s;">
+      <img src="/image/Logo Blanco.svg" alt="Logo SENA" class="h-10 md:h-12 opacity-60" />
+    </div>
+  </main>
+</Layout>

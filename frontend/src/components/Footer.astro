@@ -1,0 +1,52 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-sena-dark text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      <!-- Logo + Info -->
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center gap-3">
+          <img src="/image/Logo Verde.svg" alt="Logo SENA" class="w-10 h-10" />
+          <div>
+            <h2 class="font-bold text-lg leading-tight">Control de Acceso</h2>
+            <p class="text-white/60 text-sm leading-tight">Centro Náutico, Fluvial y Portuario</p>
+          </div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed mt-2">
+          Sistema de gestión de acceso y control de aforo para el Centro Náutico Fluvial y Portuario del SENA.
+        </p>
+      </div>
+
+      <!-- Enlaces -->
+      <div class="flex flex-col gap-3">
+        <h3 class="font-semibold text-sm uppercase tracking-wider text-white/70">Navegación</h3>
+        <nav class="flex flex-col gap-2">
+          <a href="/admin" class="text-white/60 hover:text-white text-sm transition-colors">Inicio</a>
+          <a href="/registro" class="text-white/60 hover:text-white text-sm transition-colors">Registros</a>
+          <a href="/reportes" class="text-white/60 hover:text-white text-sm transition-colors">Reportes</a>
+        </nav>
+      </div>
+
+      <!-- Contacto -->
+      <div class="flex flex-col gap-3">
+        <h3 class="font-semibold text-sm uppercase tracking-wider text-white/70">Contacto</h3>
+        <div class="flex flex-col gap-2 text-white/60 text-sm">
+          <p>Centro Náutico Fluvial y Portuario</p>
+          <p>SENA - Colombia</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Línea inferior -->
+    <div class="border-t border-white/10 mt-8 pt-6">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-white/40 text-sm">
+          © {currentYear} SENA - Centro Náutico, Fluvial y Portuario. Todos los derechos reservados.
+        </p>
+        <p class="text-white/40 text-sm">Proyecto de Grado</p>
+      </div>
+    </div>
+  </div>
+</footer>

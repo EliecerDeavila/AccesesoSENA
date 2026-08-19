@@ -301,7 +301,7 @@ import Navbar from '../components/Navbar.astro';
             <td class="py-3 px-4 text-sm text-sena-dark">${acceso.hora_salida || '<span class="text-sena-primary font-medium">En Centro</span>'}</td>
             <td class="py-3 px-4 text-sm text-sena-dark">${acceso.hora_salida ? 'Calculando...' : '<span class="text-sena-primary font-medium">En Centro</span>'}</td>
             <td class="py-3 px-4">
-              <button class="text-sena-primary hover:text-sena-primary-dark">
+              <button data-ver-acceso data-doc="${acceso.usuario?.numero_documento || ''}" class="cursor-pointer text-sena-primary hover:text-sena-primary-dark">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -319,5 +319,15 @@ import Navbar from '../components/Navbar.astro';
   }
 
   loadDashboardData();
+  setInterval(loadDashboardData, 30000);
+
+  // Eye button event delegation
+  document.getElementById('activity-table')?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('[data-ver-acceso]');
+    if (btn) {
+      const doc = btn.getAttribute('data-doc');
+      if (doc) window.location.href = `/consulta?doc=${doc}`;
+    }
+  });
   });
 </script>

@@ -2,3 +2,10 @@ node_modules/
 .env
 *.log
 .DS_Store
+
+# Debug scripts (temporales)
+check_pass.js
+check_user.js
+fix_passwords.js
+reset_pass.js
+test_login.js
