@@ -14,140 +14,234 @@ const menuItems = [
 ];
 
 if (rol === 'ADMINISTRADOR') {
-  menuItems.push({ name: 'Reporte', href: '/reportes', id: 'reporte' });
+  menuItems.push({ name: 'Reportes', href: '/reportes', id: 'reporte' });
 }
 ---
 
-<nav class="bg-white shadow-sm sticky top-0 z-50">
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-      <!-- Logo y nombre -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 flex items-center justify-center">
-          <img src="/image/Logo Verde.svg" alt="Logo SENA" class="w-10 h-10" />
+
+      <!-- Sección Izquierda: Logo + Título -->
+      <div class="flex items-center gap-3 shrink-0">
+        <img src="/image/Logo Verde.svg" alt="Logo SENA" class="w-9 h-9" />
+        <div class="hidden sm:block">
+          <h1 class="text-gray-900 font-bold text-lg leading-tight">Control de Acceso</h1>
+          <p class="text-gray-400 text-xs leading-tight">Centro Náutico, Fluvial y Portuario</p>
         </div>
-        <div>
-          <h1 class="text-sena-dark font-bold text-2xl leading-tight">Control de Acceso</h1>
-          <p class="text-sena-neutral-500 text-sm">Centro Náutico, Fluvial y Portuario</p>
+        <div class="sm:hidden">
+          <h1 class="text-gray-900 font-bold text-base leading-tight">Control de Acceso</h1>
         </div>
       </div>
 
-      <!-- Menú de navegación desktop -->
-      <div class="hidden md:flex items-center gap-2">
-        {menuItems.map((item) => (
+      <!-- Sección Central: Enlaces de navegación -->
+      <div class="hidden md:flex items-center gap-1" id="desktop-nav-links">
+        <a
+          href={rol === 'ADMINISTRADOR' ? '/admin' : '/dashboard'}
+          data-nav-link="inicio"
+          class={`relative px-4 py-5 text-sm font-medium transition-colors ${
+            activePage === 'inicio'
+              ? 'text-green-700'
+              : 'text-gray-500 hover:text-gray-900'
+          }`}
+        >
+          Inicio
+          {activePage === 'inicio' && (
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-green-600 rounded-full"></span>
+          )}
+        </a>
+        <a
+          href="/registro"
+          data-nav-link="registros"
+          class={`relative px-4 py-5 text-sm font-medium transition-colors ${
+            activePage === 'registros'
+              ? 'text-green-700'
+              : 'text-gray-500 hover:text-gray-900'
+          }`}
+        >
+          Registros
+          {activePage === 'registros' && (
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-green-600 rounded-full"></span>
+          )}
+        </a>
+        {rol === 'ADMINISTRADOR' && (
           <a
-            href={item.href}
-            class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              activePage === item.id
-                ? 'bg-sena-primary text-white'
-                : 'text-sena-dark hover:bg-sena-neutral-100'
+            href="/reportes"
+            data-nav-link="reporte"
+            class={`relative px-4 py-5 text-sm font-medium transition-colors ${
+              activePage === 'reporte'
+                ? 'text-green-700'
+                : 'text-gray-500 hover:text-gray-900'
             }`}
           >
-            {item.name}
+            Reportes
+            {activePage === 'reporte' && (
+              <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-green-600 rounded-full"></span>
+            )}
           </a>
-        ))}
+        )}
       </div>
 
-      <!-- Buscador desktop -->
-      <div class="hidden lg:flex items-center flex-1 max-w-md mx-8">
-        <div class="relative w-full">
-          <input
-            type="text"
-            placeholder="Buscar por cédula"
-            class="w-full pl-10 pr-4 py-2 border border-sena-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent"
-          />
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sena-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Perfil y cerrar sesión desktop -->
-      <div class="hidden md:flex items-center gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-sena-neutral-200 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-sena-neutral-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+      <!-- Sección Derecha: Avatar + Dropdown -->
+      <div class="hidden md:flex items-center shrink-0">
+        <div class="relative" id="profile-dropdown-container">
+          <button
+            id="btn-profile-toggle"
+            class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </div>
+            <div class="hidden lg:block text-left">
+              <p class="text-sm font-medium text-gray-900 leading-tight" id="nav-user-name">{usuario}</p>
+              <p class="text-xs text-gray-400 leading-tight" id="nav-user-role">{cargo}</p>
+            </div>
+            <svg class="w-4 h-4 text-gray-400 transition-transform duration-200" id="chevron-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
-          </div>
-          <div>
-            <p class="text-sm font-medium text-sena-dark">{usuario}</p>
-            <p class="text-xs text-sena-neutral-500">{cargo}</p>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="profile-dropdown"
+            class="hidden absolute right-0 top-full mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-1.5 z-50"
+          >
+            <div class="px-4 py-3 border-b border-gray-100">
+              <p class="text-sm font-medium text-gray-900" id="nav-dropdown-name">{usuario}</p>
+              <p class="text-xs text-gray-400 mt-0.5" id="nav-dropdown-role">{cargo}</p>
+            </div>
+            <a
+              href="#"
+              id="btn-cambiar-password"
+              class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+              Cambiar contraseña
+            </a>
+            <div class="border-t border-gray-100 mt-1.5 pt-1.5">
+              <button
+                id="btn-logout"
+                class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Cerrar sesión
+              </button>
+            </div>
           </div>
         </div>
-        <button
-          id="btn-logout"
-          class="flex items-center gap-2 px-3 py-2 text-sena-destructive hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-          </svg>
-          <span class="hidden sm:inline">Cerrar sesión</span>
-        </button>
       </div>
 
       <!-- Botón hamburguesa móvil -->
-      <button id="btn-mobile-menu" class="md:hidden p-2 rounded-lg hover:bg-sena-neutral-100">
-        <svg id="icon-hamburger" class="w-6 h-6 text-sena-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button id="btn-mobile-menu" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+        <svg id="icon-hamburger" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg id="icon-close" class="w-6 h-6 text-sena-dark hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg id="icon-close" class="w-6 h-6 text-gray-700 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
 
     <!-- Menú móvil expandido -->
-    <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-sena-neutral-100 mt-2 pt-4">
-      <div class="flex flex-col gap-2">
-        {menuItems.map((item) => (
+    <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-100 mt-2 pt-3">
+      <div class="flex flex-col gap-0.5" id="mobile-nav-links">
+        <a
+          href={rol === 'ADMINISTRADOR' ? '/admin' : '/dashboard'}
+          data-nav-link="inicio"
+          class={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+            activePage === 'inicio'
+              ? 'bg-green-50 text-green-700'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Inicio
+        </a>
+        <a
+          href="/registro"
+          data-nav-link="registros"
+          class={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+            activePage === 'registros'
+              ? 'bg-green-50 text-green-700'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Registros
+        </a>
+        {rol === 'ADMINISTRADOR' && (
           <a
-            href={item.href}
-            class={`px-4 py-3 rounded-lg text-sm font-medium ${
-              activePage === item.id
-                ? 'bg-sena-primary text-white'
-                : 'text-sena-dark hover:bg-sena-neutral-100'
+            href="/reportes"
+            data-nav-link="reporte"
+            class={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+              activePage === 'reporte'
+                ? 'bg-green-50 text-green-700'
+                : 'text-gray-600 hover:bg-gray-50'
             }`}
           >
-            {item.name}
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Reportes
           </a>
-        ))}
+        )}
       </div>
 
-      <!-- Perfil y sesión en móvil -->
-      <div class="mt-4 pt-4 border-t border-sena-neutral-100">
-        <div class="flex items-center gap-3 px-4 py-2">
-          <div class="w-10 h-10 bg-sena-neutral-200 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-sena-neutral-500" fill="currentColor" viewBox="0 0 24 24">
+      <!-- Perfil en móvil -->
+      <div class="mt-3 pt-3 border-t border-gray-100">
+        <div class="flex items-center gap-3 px-4 py-3">
+          <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
           </div>
           <div>
-            <p class="text-sm font-medium text-sena-dark">{usuario}</p>
-            <p class="text-xs text-sena-neutral-500">{cargo}</p>
+            <p class="text-sm font-medium text-gray-900" id="nav-mobile-name">{usuario}</p>
+            <p class="text-xs text-gray-400" id="nav-mobile-role">{cargo}</p>
           </div>
         </div>
-        <button
-          id="btn-logout-mobile"
-          class="w-full flex items-center gap-2 px-4 py-3 mt-2 text-sena-destructive hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-          </svg>
-          Cerrar sesión
-        </button>
+        <div class="flex flex-col gap-0.5 mt-1">
+          <a
+            href="#"
+            id="btn-cambiar-password-mobile"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors text-sm font-medium"
+          >
+            <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            Cambiar contraseña
+          </a>
+          <button
+            id="btn-logout-mobile"
+            class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
+          >
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Cerrar sesión
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </nav>
 
 <script>
+  // Mobile menu toggle
   const btnMobileMenu = document.getElementById('btn-mobile-menu');
   const mobileMenu = document.getElementById('mobile-menu');
   const iconHamburger = document.getElementById('icon-hamburger');
   const iconClose = document.getElementById('icon-close');
-  const btnLogout = document.getElementById('btn-logout');
-  const btnLogoutMobile = document.getElementById('btn-logout-mobile');
 
   let menuOpen = false;
 
@@ -158,12 +252,101 @@ if (rol === 'ADMINISTRADOR') {
     iconClose?.classList.toggle('hidden', !menuOpen);
   });
 
+  // Profile dropdown toggle
+  const btnProfileToggle = document.getElementById('btn-profile-toggle');
+  const profileDropdown = document.getElementById('profile-dropdown');
+  const chevronIcon = document.getElementById('chevron-icon');
+  let dropdownOpen = false;
+
+  btnProfileToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownOpen = !dropdownOpen;
+    profileDropdown?.classList.toggle('hidden', !dropdownOpen);
+    chevronIcon?.classList.toggle('rotate-180', dropdownOpen);
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    const container = document.getElementById('profile-dropdown-container');
+    if (container && !container.contains(e.target as Node)) {
+      dropdownOpen = false;
+      profileDropdown?.classList.add('hidden');
+      chevronIcon?.classList.remove('rotate-180');
+    }
+  });
+
+  // Close dropdown on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dropdownOpen) {
+      dropdownOpen = false;
+      profileDropdown?.classList.add('hidden');
+      chevronIcon?.classList.remove('rotate-180');
+    }
+  });
+
+  // Logout
   function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     window.location.href = '/';
   }
 
+  const btnLogout = document.getElementById('btn-logout');
+  const btnLogoutMobile = document.getElementById('btn-logout-mobile');
+
   btnLogout?.addEventListener('click', logout);
   btnLogoutMobile?.addEventListener('click', logout);
+
+  // Change password - desktop
+  const btnCambiarPassword = document.getElementById('btn-cambiar-password');
+  btnCambiarPassword?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = '/configuracion';
+  });
+
+  // Change password - mobile
+  const btnCambiarPasswordMobile = document.getElementById('btn-cambiar-password-mobile');
+  btnCambiarPasswordMobile?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = '/configuracion';
+  });
+
+  // === Dynamic user info from localStorage ===
+  const usuarioStr = localStorage.getItem('usuario');
+  if (usuarioStr) {
+    try {
+      const usuarioData = JSON.parse(usuarioStr);
+      const nombre = usuarioData.nombre_completo || '';
+      const rol = usuarioData.rol || '';
+      const cargo = rol === 'ADMINISTRADOR' ? 'Administrador del Sistema' : 'Vigilante de Turno';
+      const homeHref = rol === 'ADMINISTRADOR' ? '/admin' : '/dashboard';
+
+      // Update user info in profile
+      const navUserName = document.getElementById('nav-user-name');
+      const navUserRole = document.getElementById('nav-user-role');
+      const navDropdownName = document.getElementById('nav-dropdown-name');
+      const navDropdownRole = document.getElementById('nav-dropdown-role');
+      const navMobileName = document.getElementById('nav-mobile-name');
+      const navMobileRole = document.getElementById('nav-mobile-role');
+
+      if (navUserName) navUserName.textContent = nombre;
+      if (navUserRole) navUserRole.textContent = cargo;
+      if (navDropdownName) navDropdownName.textContent = nombre;
+      if (navDropdownRole) navDropdownRole.textContent = cargo;
+      if (navMobileName) navMobileName.textContent = nombre;
+      if (navMobileRole) navMobileRole.textContent = cargo;
+
+      // Update nav links href
+      document.querySelectorAll('[data-nav-link="inicio"]').forEach((link) => {
+        (link as HTMLAnchorElement).href = homeHref;
+      });
+
+      // Show/hide Reportes link based on role
+      document.querySelectorAll('[data-nav-link="reporte"]').forEach((link) => {
+        (link as HTMLElement).style.display = rol === 'ADMINISTRADOR' ? '' : 'none';
+      });
+    } catch (e) {
+      // Ignore parse errors
+    }
+  }
 </script>

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 ---
 
 <Layout title="Reportes - Control de Acceso SENA">
-  <Navbar usuario="Administrador" cargo="Administrador del Sistema" rol="ADMINISTRADOR" activePage="reporte" />
+  <Navbar usuario="" cargo="" rol="" activePage="reporte" />
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Encabezado -->
@@ -96,7 +96,8 @@ import Navbar from '../components/Navbar.astro';
           </thead>
           <tbody id="reportes-table">
             <tr>
-              <td colspan="6" class="py-8 text-center text-sena-neutral-500">Cargando reportes...</td>
+              <td colspan="6" class="py-8 text-center rounded-balance skeleton bg-sena-neutral-100/20 animate-pulse">
+</td>
             </tr>
           </tbody>
         </table>
@@ -155,7 +156,7 @@ import Navbar from '../components/Navbar.astro';
             `;
           }).join('');
         } else {
-          tableBody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-sena-neutral-500">No hay registros para el rango seleccionado</td></tr>';
+          tableBody.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-sena-neutral-500">No hay registros para el rango seleccionado</td></tr>';
         }
       } catch (error) {
         console.error('Error loading reports:', error);

@@ -52,6 +52,11 @@ export default {
             500: '#6B7280',
             black: '#000000',
           },
+          brassGold: {
+            DEFAULT: '#D4AF37',
+            light: '#E8C54B',
+            dark: '#A68825',
+          },
         },
       },
       fontFamily: {

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 ---
 
 <Layout title="Detalle del Registro - Control de Acceso SENA">
-  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  <Navbar usuario="" cargo="" rol="" activePage="registros" />
   
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Título -->
@@ -118,7 +118,6 @@ import Navbar from '../components/Navbar.astro';
 
   if (!token || !['ADMINISTRADOR', 'VIGILANTE'].includes(usuario.rol)) {
     window.location.href = '/';
-    return;
   }
 
   // Get document from URL params

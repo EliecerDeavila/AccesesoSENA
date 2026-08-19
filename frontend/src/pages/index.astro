@@ -60,17 +60,35 @@ import Layout from '../layout/Layout.astro';
     }
   </style>
   <main class="h-screen flex gap-2 lg:gap-4 bg-gradient-login relative overflow-hidden">
-    <!-- Figura 2: centro superior, pegada arriba -->
-      <img src="/image/figuras/Figura 2.svg" alt="" width="434" height="333" class="absolute top-[-20px] left-1/2 -translate-x-1/2 w-[min(384px,80vw)] mix-blend-soft-light z-0 animate-float" />
-    <!-- Figura 5: centro inferior, pegada abajo -->
-      <img src="/image/figuras/figura 5.svg" alt="" width="468" height="294" class="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-[min(384px,80vw)] mix-blend-soft-light z-0 animate-float-delay" />
-    <!-- Figura 4: parte superior derecha -->
-      <img src="/image/figuras/figura 4.svg" alt="" width="325" height="299" class="absolute top-[20px] right-[20px] w-[min(325px,50vw)] mix-blend-soft-light z-0 animate-float-slow" />
+ <!-- Figura 2: centro superior -->
+<img 
+  src="/image/figuras/Figura 2.svg" 
+  alt="" 
+  class="absolute -top-5 left-1/2 -translate-x-1/2 w-36 sm:w-48 md:w-64 lg:w-80 xl:w-[450px] pointer-events-none mix-blend-soft-light z-0 animate-float" 
+/>
 
+<!-- Figura 5: centro inferior -->
+<img 
+  src="/image/figuras/figura 5.svg" 
+  alt="" 
+  class="absolute -bottom-5 left-1/2 -translate-x-1/2 w-36 sm:w-48 md:w-64 lg:w-80 xl:w-[450px] pointer-events-none mix-blend-soft-light z-0 animate-float-delay" /><!-- Figura 4: parte superior derecha -->
+<!-- Figura 2: centro superior -->
+<img 
+  src="/image/figuras/Figura 2.svg" 
+  alt="" 
+  class="absolute -top-5 left-1/2 -translate-x-1/2 w-36 sm:w-48 md:w-64 lg:w-80 xl:w-[450x] pointer-events-none mix-blend-soft-light z-0 animate-float sm:hidden xs:hidden" 
+/>
+
+<!-- Figura 5: centro inferior -->
+<img 
+  src="/image/figuras/figura 5.svg" 
+  alt="" 
+  class="absolute -bottom-5 left-1/2 -translate-x-1/2 w-36 sm:w-48 md:w-64 lg:w-80 xl:w-[450px] pointer-events-none mix-blend-soft-light z-0 animate-float-delay" 
+/>
     <!-- Panel Izquierdo (50%) -->
     <div class="hidden lg:flex lg:w-[50%] relative items-stretch overflow-hidden">
       <!-- Figura 1: parte inferior visible, superior recortada -->
-      <img src="/image/figuras/Figura 1.svg" alt="" width="477" height="680" class="absolute bottom-[100px] left-[20px] w-[min(476px,80vw)] mix-blend-soft-light z-0 animate-float" />
+      <img src="/image/figuras/Figura 1.svg" alt="" class="absolute bottom-[100px] left-[20px] lg:w-80 md:w-64 sm:w-48 w-36 md:bottom-[150px] sm:bottom-[80px] pointer-events-none mix-blend-soft-light z-0 animate-float" />
 
       <!-- Glass: responsive por breakpoint -->
       <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[250px] lg:w-[600px] lg:h-[350px] xl:w-[800px] xl:h-[400px] bg-white/10 backdrop-blur-md border-r border-white/20 rounded-r-[20px] lg:rounded-r-[30px] xl:rounded-r-[40px] z-10 animate-slide-left"></div>
@@ -92,7 +110,7 @@ import Layout from '../layout/Layout.astro';
     <!-- Panel Derecho (50%) - Formulario -->
     <div class="relative w-full lg:w-[50%] flex items-center justify-center p-4 overflow-hidden">
       <!-- Figura 3: debajo del botón Iniciar, detrás del glass, 100px a la derecha -->
-      <img src="/image/figuras/figura 3.svg" alt="" width="429" height="362" class="absolute bottom-[30px] left-[calc(50%+100px)] -translate-x-1/2 w-[min(384px,80vw)] z-0 animate-float-slow" />
+      <img src="/image/figuras/figura 3.svg" alt="" class="absolute bottom-[30px] left-[calc(50%+100px)] -translate-x-1/2 lg:w-80 md:w-64 sm:w-48 w-36 md:bottom-[50px] sm:bottom-[70px] pointer-events-none mix-blend-soft-light z-0 animate-float-slow" />
 
       <!-- Glass overlay -->
       <div class="absolute inset-0 bg-white/10 backdrop-blur-md border-l border-white/20 z-10 animate-slide-right"></div>
@@ -100,7 +118,7 @@ import Layout from '../layout/Layout.astro';
       <div class="w-full max-w-md relative z-20 animate-slide-right">
         <!-- Logo -->
         <div class="flex flex-col items-center mb-8 animate-bounce-in">
-          <img src="/image/Logo Blanco.svg" alt="Logo SENA" width="64" height="62" class="h-14 sm:h-16 lg:h-20 mb-4" />
+          <img src="/image/Logo Blanco.svg" alt="Logo SENA" class="h-14 sm:h-16 lg:h-20 mb-4" />
           <h1 class="text-white text-xl sm:text-2xl font-bold text-center">Iniciar Sesión</h1>
         </div>
 
@@ -161,7 +179,7 @@ import Layout from '../layout/Layout.astro';
           <button
             type="submit"
             id="btn-login"
-            class="w-full py-3 bg-gradient-primary border border-white rounded-lg text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg btn-glow"
+            class="w-full py-3 bg-gradient-primary border border-white rounded-lg text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg btn-glow focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent"
           >
             Iniciar
           </button>

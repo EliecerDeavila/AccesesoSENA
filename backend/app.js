@@ -43,7 +43,7 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log('✅ MySQL conectado correctamente');
 
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
     console.log('✅ Modelos sincronizados');
 
     await seedRoles();

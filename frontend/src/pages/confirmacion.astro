@@ -4,21 +4,21 @@ import Navbar from '../components/Navbar.astro';
 ---
 
 <Layout title="Confirmación - Control de Acceso SENA">
-  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  <Navbar usuario="" cargo="" rol="" activePage="registros" />
   
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex items-center justify-center min-h-[60vh]">
       <!-- Tarjeta de confirmación -->
       <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-8 max-w-md w-full text-center">
-        <!-- Check verde -->
-        <div class="w-20 h-20 bg-sena-primary rounded-full flex items-center justify-center mx-auto mb-6">
+        <!-- Check bronce/oro -->
+        <div class="w-20 h-20 bg-brassGold rounded-full flex items-center justify-center mx-auto mb-6">
           <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
         <!-- Título -->
-        <h1 id="confirmacion-titulo" class="text-2xl font-bold text-sena-primary mb-4">
+        <h1 id="confirmacion-titulo" class="text-2xl font-bold text-brassGold mb-4">
           ¡Registro Exitoso!
         </h1>
 
@@ -40,10 +40,15 @@ import Navbar from '../components/Navbar.astro';
           </div>
         </div>
 
-        <!-- Botón finalizar -->
-        <button id="btn-finalizar" class="w-full py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-semibold text-lg">
-          Finalizar
-        </button>
+        <!-- Botones de navegación -->
+        <div class="flex flex-col gap-3">
+          <button id="btn-registrar-otro" class="w-full py-3 bg-brassGold text-white rounded-xl hover:bg-brassGold-dark transition-colors font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-brassGold-dark focus:border-transparent">
+            Registrar otro visitante
+          </button>
+          <button id="btn-inicio" class="w-full py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium text-base focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
+            Ir a Inicio
+          </button>
+        </div>
       </div>
     </div>
   </main>
@@ -62,7 +67,6 @@ import Navbar from '../components/Navbar.astro';
 
   if (!token || !['ADMINISTRADOR', 'VIGILANTE'].includes(usuario.rol)) {
     window.location.href = '/';
-    return;
   }
 
   // Get params from URL
@@ -87,8 +91,12 @@ import Navbar from '../components/Navbar.astro';
 
   escarapelaEl.textContent = escarapela;
 
-  // Finalizar button
-  document.getElementById('btn-finalizar')?.addEventListener('click', () => {
+  // Navigation buttons
+  document.getElementById('btn-registrar-otro')?.addEventListener('click', () => {
+    window.location.href = '/registro';
+  });
+
+  document.getElementById('btn-inicio')?.addEventListener('click', () => {
     const usuarioData = JSON.parse(localStorage.getItem('usuario') || '{}');
     if (usuarioData.rol === 'ADMINISTRADOR') {
       window.location.href = '/admin';

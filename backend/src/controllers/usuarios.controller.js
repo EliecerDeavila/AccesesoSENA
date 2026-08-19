@@ -172,4 +172,143 @@ const eliminar = async (req, res) => {
   }
 };
 
-module.exports = { listar, buscarPorDocumento, crear, actualizar, eliminar };
+const cambiarPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password_actual, nueva_password } = req.body;
+
+    // Verificar que el usuario existe
+    const usuario = await Usuario.findByPk(id, {
+      include: [{ model: Rol, as: 'rol' }]
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Los Vigilantes solo pueden cambiar su propia contraseña
+    // Los Administradores pueden cambiar la de cualquier usuario
+    const esAdmin = usuario.rol.nombre === 'ADMINISTRADOR';
+    const esMismoUsuario = usuario.numero_documento === req.usuario.numero_documento;
+
+    if (!esAdmin && !esMismoUsuario) {
+      return res.status(403).json({ message: 'No autorizado para cambiar esta contraseña' });
+    }
+
+    // Verificar contraseña actual usando bcrypt
+    const passwordValida = await bcrypt.compare(password_actual, usuario.password_hash);
+
+    if (!passwordValida) {
+      return res.status(400).json({ message: 'La contraseña actual es incorrecta' });
+    }
+
+    // Hashear la nueva contraseña
+    const nuevaHash = await bcrypt.hash(nueva_password, 10);
+
+    // Actualizar password_hash
+    await usuario.update({ password_hash: nuevaHash });
+
+    // Obtener usuario response sin password_hash
+    const usuarioActualizado = await Usuario.findByPk(id, {
+      include: [{ model: Rol, as: 'rol' }],
+      attributes: { exclude: ['password_hash'] }
+    });
+
+    res.json({ 
+      message: 'Contraseña actualizada correctamente',
+      usuario: usuarioActualizado,
+      requiereReingreso: true 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al cambiar contraseña', error: error.message });
+  }
+};
+
+const resetPasswordPorAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nueva_password } = req.body;
+
+    // Verificar que el usuario existe
+    const usuario = await Usuario.findByPk(id, {
+      include: [{ model: Rol, as: 'rol' }]
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Hashear la nueva contraseña
+    const nuevaHash = await bcrypt.hash(nueva_password, 10);
+
+    // Actualizar password_hash
+    await usuario.update({ password_hash: nuevaHash });
+
+    // Obtener usuario response sin password_hash
+    const usuarioActualizado = await Usuario.findByPk(id, {
+      include: [{ model: Rol, as: 'rol' }],
+      attributes: { exclude: ['password_hash'] }
+    });
+
+    res.json({ 
+      message: 'Contraseña reseteada por administrador',
+      usuario: usuarioActualizado,
+      temporal: false,
+      requiereReingreso: true 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al resetear contraseña', error: error.message });
+  }
+};
+
+const crearVisitanteSchema = z.object({
+  numero_documento: z.string().min(5, 'Documento debe tener al menos 5 caracteres'),
+  tipo_documento: z.enum(['CC', 'TI', 'CE', 'PA'], { message: 'Tipo de documento inválido' }),
+  nombre_completo: z.string().min(3, 'Nombre debe tener al menos 3 caracteres'),
+  telefono_contacto: z.string().optional(),
+  contacto_emergencia: z.string().optional()
+});
+
+const crearVisitante = async (req, res) => {
+  try {
+    const resultado = crearVisitanteSchema.safeParse(req.body);
+
+    if (!resultado.success) {
+      const errores = resultado.error.errors.map(e => e.message);
+      return res.status(400).json({ message: 'Datos inválidos', errores });
+    }
+
+    const { numero_documento, tipo_documento, nombre_completo, telefono_contacto, contacto_emergencia } = resultado.data;
+
+    const rolVisitante = await Rol.findOne({ where: { nombre: 'VISITANTE' } });
+    if (!rolVisitante) {
+      return res.status(500).json({ message: 'Rol VISITANTE no encontrado en el sistema' });
+    }
+
+    const docExiste = await Usuario.findOne({ where: { numero_documento, eliminado: false } });
+    if (docExiste) {
+      return res.status(400).json({ message: 'Ya existe un usuario con ese documento', usuario: docExiste });
+    }
+
+    const usuario = await Usuario.create({
+      numero_documento,
+      tipo_documento,
+      nombre_completo,
+      id_rol: rolVisitante.id_rol,
+      telefono_contacto,
+      contacto_emergencia,
+      password_hash: null
+    });
+
+    const usuarioResponse = await Usuario.findByPk(usuario.id_usuario, {
+      include: [{ model: Rol, as: 'rol' }],
+      attributes: { exclude: ['password_hash'] }
+    });
+
+    res.status(201).json({ message: 'Visitante creado correctamente', usuario: usuarioResponse });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al crear visitante', error: error.message });
+  }
+};
+
+module.exports = { listar, buscarPorDocumento, crear, actualizar, eliminar, cambiarPassword, resetPasswordPorAdmin, crearVisitante };

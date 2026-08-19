@@ -28,6 +28,15 @@
   --color-sena-error: #D32F2F;
   --color-sena-error-light: #E57373;
 
+  --color-sena-brassGold: #D4AF37;
+  --color-sena-brassGold-light: #E8C54B;
+  --color-sena-brassGold-dark: #A68825;
+
+  @keyframes number {
+    0% { opacity: 0; transform: translateY(5px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
   --color-sena-destructive: #93000A;
   --color-sena-destructive-light: #B71C1C;
   --color-sena-destructive-dark: #6D0007;
@@ -45,6 +54,21 @@
   --background-gradient-primary: linear-gradient(135deg, #39A900, #5BC200);
   --background-gradient-secondary: linear-gradient(135deg, #007832, #1C9A45);
   --background-gradient-dark: linear-gradient(135deg, #00304D, #1A4F6C);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-number,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-fade-up,
+  .animate-bounce-in,
+  .animate-float,
+  .animate-float-delay,
+  .animate-float-slow,
+  .animate-shake {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 html {

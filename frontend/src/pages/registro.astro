@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 ---
 
 <Layout title="Registrar Visitante - Control de Acceso SENA">
-  <Navbar usuario="Vigilante" cargo="Vigilante de Turno" rol="VIGILANTE" activePage="registros" />
+  <Navbar usuario="" cargo="" rol="" activePage="registros" />
   
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Título -->
@@ -20,7 +20,7 @@ import Navbar from '../components/Navbar.astro';
           class="w-full pl-4 pr-4 py-3 border border-sena-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent"
         />
       </div>
-      <button id="btn-buscar" class="px-6 py-3 bg-sena-primary text-white rounded-xl hover:bg-sena-primary-dark transition-colors font-medium flex items-center gap-2">
+      <button id="btn-buscar" class="px-6 py-3 text-white rounded-xl transition-colors font-medium flex items-center gap-2" style="background: linear-gradient(135deg, #1A4F6C, #00304D);">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
@@ -168,7 +168,7 @@ import Navbar from '../components/Navbar.astro';
             </div>
             <h3 class="font-semibold">Visitantes en el centro de formación Actualmente</h3>
           </div>
-          <p id="aforo-actual" class="text-5xl font-bold text-center py-4">--</p>
+          <p id="aforo-actual" class="text-5xl font-bold text-center py-4 animate-number">--</p>
         </div>
 
         <!-- Últimos Registros -->
@@ -194,7 +194,6 @@ import Navbar from '../components/Navbar.astro';
 
   if (!token || !['ADMINISTRADOR', 'VIGILANTE'].includes(usuario.rol)) {
     window.location.href = '/';
-    return;
   }
 
   let usuarioEncontrado: any = null;
@@ -225,7 +224,10 @@ import Navbar from '../components/Navbar.astro';
         showMessage('Visitante encontrado', 'success');
       } else {
         usuarioEncontrado = null;
-        showMessage('Visitante no encontrado. Puede registrarlo como nuevo.', 'info');
+        // Auto-fill document number in form
+        (document.getElementById('numero-documento') as HTMLInputElement).value = doc;
+        (document.getElementById('nombre') as HTMLInputElement).focus();
+        showMessage('Visitante no encontrado. Complete los datos para registrarlo.', 'info');
       }
     } catch (error) {
       console.error('Error searching:', error);
@@ -259,28 +261,32 @@ import Navbar from '../components/Navbar.astro';
 
       let userId = usuarioEncontrado?.id_usuario;
 
-      // Create user if not exists
+      // Create visitante if not exists
       if (!userId) {
-        const userRes = await fetch('http://localhost:3000/api/usuarios', {
+        const userRes = await fetch('http://localhost:3000/api/usuarios/visitante', {
           method: 'POST',
           headers,
           body: JSON.stringify({
             numero_documento: numeroDocumento,
             tipo_documento: tipoDocumento,
             nombre_completo: nombre,
-            id_rol: 5, // VISITANTE role
             telefono_contacto: contactoTelefono,
             contacto_emergencia: contactoNombre
           })
         });
 
-        if (!userRes.ok) {
-          const errData = await userRes.json();
-          throw new Error(errData.message || 'Error al crear usuario');
-        }
-
         const userData = await userRes.json();
-        userId = userData.usuario.id_usuario;
+
+        if (!userRes.ok) {
+          // If user already exists, try to get their ID
+          if (userData.usuario?.id_usuario) {
+            userId = userData.usuario.id_usuario;
+          } else {
+            throw new Error(userData.message || 'Error al crear visitante');
+          }
+        } else {
+          userId = userData.usuario.id_usuario;
+        }
       }
 
       // Register entry or exit
@@ -348,17 +354,33 @@ import Navbar from '../components/Navbar.astro';
       const registrosEl = document.getElementById('ultimos-registros');
       
       if (Array.isArray(accesosData) && accesosData.length > 0) {
-        registrosEl.innerHTML = accesosData.slice(0, 3).map((a: any) => {
+        registrosEl.innerHTML = accesosData.slice(0, 5).map((a: any) => {
           const esEntrada = !a.hora_salida;
           return `
-            <div class="flex items-center justify-between text-sm">
-              <div>
-                <p class="font-medium">${a.usuario?.nombre_completo || 'N/A'}</p>
+            <div class="flex items-center justify-between text-sm py-2 border-b border-white/10 last:border-0">
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">${a.usuario?.nombre_completo || 'N/A'}</p>
                 <p class="text-white/70 text-xs">${esEntrada ? 'Entrada' : 'Salida'} • ${esEntrada ? a.hora_entrada : a.hora_salida}</p>
               </div>
+              ${esEntrada ? `
+                <button
+                  data-salida-rapida
+                  data-user-id="${a.usuario?.id_usuario}"
+                  data-nombre="${a.usuario?.nombre_completo || 'Usuario'}"
+                  class="ml-2 shrink-0 flex items-center gap-1 px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition-colors"
+                  title="Registrar salida"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Salida
+                </button>
+              ` : ''}
             </div>
           `;
         }).join('');
+      } else {
+        registrosEl.innerHTML = '<p class="text-white/70 text-sm text-center py-2">No hay registros hoy</p>';
       }
     } catch (error) {
       console.error('Error loading side panel:', error);
@@ -366,4 +388,43 @@ import Navbar from '../components/Navbar.astro';
   }
 
   loadSidePanel();
+
+  // Quick exit button - event delegation
+  const registrosContainer = document.getElementById('ultimos-registros');
+  registrosContainer?.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest('[data-salida-rapida]');
+    if (!btn) return;
+
+    const userId = btn.getAttribute('data-user-id');
+    const nombre = btn.getAttribute('data-nombre');
+
+    if (!userId) return;
+
+    // Confirm before registering exit
+    if (!confirm(`¿Registrar salida de ${nombre}?`)) return;
+
+    try {
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const res = await fetch('http://localhost:3000/api/accesos/salida', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ id_usuario: parseInt(userId) })
+      });
+
+      if (res.ok) {
+        showMessage(`Salida de ${nombre} registrada correctamente`, 'success');
+        // Reload side panel data
+        loadSidePanel();
+      } else {
+        const errData = await res.json();
+        throw new Error(errData.message || 'Error al registrar salida');
+      }
+    } catch (error) {
+      showMessage(error instanceof Error ? error.message : 'Error al registrar salida', 'error');
+    }
+  });
 </script>

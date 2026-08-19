@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 ---
 
 <Layout title="Panel de Control General - Admin">
-  <Navbar usuario="Administrador" cargo="Administrador del Sistema" rol="ADMINISTRADOR" activePage="inicio" />
+  <Navbar usuario="" cargo="" rol="" activePage="inicio" />
   
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Encabezado -->
@@ -21,7 +21,7 @@ import Navbar from '../components/Navbar.astro';
           <button id="btn-mensual" class="time-selector px-4 py-2 rounded-md text-sm font-medium text-sena-neutral-500 hover:text-sena-dark transition-all">Mensual</button>
         </div>
         <!-- Botón nuevo registro -->
-        <a href="/registro" class="flex items-center gap-2 px-4 py-2 bg-sena-primary text-white rounded-lg hover:bg-sena-primary-dark transition-colors font-medium">
+        <a href="/registro" class="flex items-center gap-2 px-4 py-2 bg-sena-primary text-white rounded-lg hover:bg-sena-primary-dark transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
@@ -135,13 +135,13 @@ import Navbar from '../components/Navbar.astro';
 
         <!-- Botones de exportación -->
         <div class="mt-8 space-y-3">
-          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-dark text-white rounded-lg hover:bg-sena-dark-dark transition-colors font-medium">
+          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-dark text-white rounded-lg hover:bg-sena-dark-dark transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-sena-dark dark focus:ring-sena-neutral-200 focus:border-transparent">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Exportar PDF
           </button>
-          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-secondary text-white rounded-lg hover:bg-sena-secondary-dark transition-colors font-medium">
+          <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-sena-secondary text-white rounded-lg hover:bg-sena-secondary-dark transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-sena-secondary focus:border-transparent">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -155,7 +155,7 @@ import Navbar from '../components/Navbar.astro';
     <div class="bg-white rounded-xl shadow-sm p-6">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-semibold text-sena-dark">Actividad Reciente</h2>
-        <a href="#" class="text-sena-primary hover:text-sena-primary-dark text-sm font-medium">Ver todo</a>
+        <a href="#" class="text-sena-primary hover:text-sena-primary-dark text-sm font-medium focus:outline-none focus:ring-2 focus:ring-sena-primary focus:border-transparent">Ver todo</a>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full">
@@ -171,7 +171,8 @@ import Navbar from '../components/Navbar.astro';
           </thead>
           <tbody id="activity-table">
             <tr>
-              <td colspan="6" class="py-8 text-center text-sena-neutral-500">Cargando actividad...</td>
+              <td colspan="6" class="py-8 text-center rounded-balance skeleton bg-sena-neutral-100/20 animate-pulse">
+</td>
             </tr>
           </tbody>
         </table>
@@ -310,7 +311,7 @@ import Navbar from '../components/Navbar.astro';
           </tr>
         `).join('');
       } else {
-        tableBody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-sena-neutral-500">No hay actividad reciente</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-sena-neutral-500">No hay actividad reciente</td></tr>';
       }
     } catch (error) {
       console.error('Error loading dashboard data:', error);
